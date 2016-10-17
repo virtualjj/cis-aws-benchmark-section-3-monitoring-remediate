@@ -15,6 +15,11 @@ Here is what is working:
 Note that for resource **TrailBucket** the DeletionPolicy is set to **Delete** since I'm still testing.
 
     "DeletionPolicy":"Delete",
+    
+Here is what I will be adding this week:
+
+* Custom KMS key for CloudTrail encrypting.
+* The rest of the metric filters and alarms.
 
 ## PURPOSE
 The purpose of this project is to automate as many of the [CIS AWS Foundations Benchmark](https://d0.awsstatic.com/whitepapers/compliance/AWS_CIS_Foundations_Benchmark.pdf) controls as possible using AWS CloudFormation.  
