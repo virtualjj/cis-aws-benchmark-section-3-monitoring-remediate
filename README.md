@@ -11,8 +11,13 @@ Here is what is working:
 	* 3.14
 	* 3.13
 	* 3.12
+	* 3.11
+	* 3.10
+	* 3.9
+	* 3.8
+	* 3.7
 
-Note that for resource **TrailBucket** the DeletionPolicy is set to **Delete** since I'm still testing.
+Note that for resource **TrailBucket** the DeletionPolicy is set to **Delete** since I'm still testing. Also, when you delete the stack, make sure to empty out the S3 bucket that this template creates **FIRST** since even with a DeletionPolicy of Delete, CloudFormation will fail since the bucket is not empty.
 
     "DeletionPolicy":"Delete",
     
