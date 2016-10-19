@@ -314,6 +314,120 @@
             ]
          }
       },
+      "34IAMChangesMetricFilter":{
+         "DependsOn":[
+            "TrailLogGroup"
+         ],
+         "Type":"AWS::Logs::MetricFilter",
+         "Properties":{
+            "LogGroupName":{
+               "Ref":"CloudTrailLogGroupName"
+            },
+            "FilterPattern":"{ ($.eventName=DeleteGroupPolicy) || ($.eventName=DeleteUserPolicy) || ($.eventName=PutGroupPolicy) || ($.eventName=PutRolePolicy) || ($.eventName=PutUserPolicy) || ($.eventName=CreatePolicy) || ($.eventName=DeletePolicy) || ($.eventName=CreatePolicyVersion) || ($.eventName=DeletePolicyVersion)  || ($.eventName=AttachRolePolicy) }",
+            "MetricTransformations":[
+               {
+                  "MetricName":"CIS-BENCHMARK-IAM-CHANGES",
+                  "MetricNamespace":"CIS-SECURITY",
+                  "MetricValue":"1"
+               }
+            ]
+         }
+      },
+      "34IAMChangesAlarm":{
+         "Type":"AWS::CloudWatch::Alarm",
+         "Properties":{
+            "AlarmName":"CIS-BENCHMARK-IAM-CHANGES",
+            "AlarmDescription":"Alarms for changes to AWS IAM service.",
+            "AlarmActions":[
+               {
+                  "Ref":"AlarmNotificationTopic"
+               }
+            ],
+            "MetricName":"CIS-BENCHMARK-IAM-CHANGES",
+            "Namespace":"CIS-SECURITY",
+            "ComparisonOperator":"GreaterThanOrEqualToThreshold",
+            "EvaluationPeriods":"1",
+            "Period":"300",
+            "Statistic":"Sum",
+            "Threshold":"1"
+         }
+      },
+      "35CloudTrailChangesMetricFilter":{
+         "DependsOn":[
+            "TrailLogGroup"
+         ],
+         "Type":"AWS::Logs::MetricFilter",
+         "Properties":{
+            "LogGroupName":{
+               "Ref":"CloudTrailLogGroupName"
+            },
+            "FilterPattern":"{ ($.eventName = CreateTrail) || ($.eventName = UpdateTrail) || ($.eventName = DeleteTrail) || ($.eventName = StartLogging) || ($.eventName = StopLogging) }",
+            "MetricTransformations":[
+               {
+                  "MetricName":"CIS-BENCHMARK-CLOUDTRAIL-CHANGES",
+                  "MetricNamespace":"CIS-SECURITY",
+                  "MetricValue":"1"
+               }
+            ]
+         }
+      },
+      "35CloudTrailChangesAlarm":{
+         "Type":"AWS::CloudWatch::Alarm",
+         "Properties":{
+            "AlarmName":"CIS-BENCHMARK-CLOUDTRAIL-CHANGES",
+            "AlarmDescription":"Alarms for changes to AWS CloudTrail service.",
+            "AlarmActions":[
+               {
+                  "Ref":"AlarmNotificationTopic"
+               }
+            ],
+            "MetricName":"CIS-BENCHMARK-CLOUDTRAIL-CHANGES",
+            "Namespace":"CIS-SECURITY",
+            "ComparisonOperator":"GreaterThanOrEqualToThreshold",
+            "EvaluationPeriods":"1",
+            "Period":"300",
+            "Statistic":"Sum",
+            "Threshold":"1"
+         }
+      },
+      "36ConsoleFailuresMetricFilter":{
+         "DependsOn":[
+            "TrailLogGroup"
+         ],
+         "Type":"AWS::Logs::MetricFilter",
+         "Properties":{
+            "LogGroupName":{
+               "Ref":"CloudTrailLogGroupName"
+            },
+            "FilterPattern":"{ ($.eventName = ConsoleLogin) && ($.errorMessage = \"Failedauthentication\") }",
+            "MetricTransformations":[
+               {
+                  "MetricName":"CIS-BENCHMARK-CONSOLE-FAILURES",
+                  "MetricNamespace":"CIS-SECURITY",
+                  "MetricValue":"1"
+               }
+            ]
+         }
+      },
+      "36ConsoleFailuresAlarm":{
+         "Type":"AWS::CloudWatch::Alarm",
+         "Properties":{
+            "AlarmName":"CIS-BENCHMARK-CONSOLE-FAILURES",
+            "AlarmDescription":"Alarms for failed console logins.",
+            "AlarmActions":[
+               {
+                  "Ref":"AlarmNotificationTopic"
+               }
+            ],
+            "MetricName":"CIS-BENCHMARK-CONSOLE-FAILURES",
+            "Namespace":"CIS-SECURITY",
+            "ComparisonOperator":"GreaterThanOrEqualToThreshold",
+            "EvaluationPeriods":"1",
+            "Period":"300",
+            "Statistic":"Sum",
+            "Threshold":"10"
+         }
+      },
       "37CMKChangesMetricFilter":{
          "DependsOn":[
             "TrailLogGroup"
@@ -337,7 +451,7 @@
          "Type":"AWS::CloudWatch::Alarm",
          "Properties":{
             "AlarmName":"CIS-BENCHMARK-CMK-CHANGES",
-            "AlarmDescription":"Alarms when changes are made to the AWS Config service.",
+            "AlarmDescription":"Alarms when changes are made to CMK (Customer Master Keys).",
             "AlarmActions":[
                {
                   "Ref":"AlarmNotificationTopic"
@@ -375,7 +489,7 @@
          "Type":"AWS::CloudWatch::Alarm",
          "Properties":{
             "AlarmName":"CIS-BENCHMARK-S3BKTPOLICY-CHANGES",
-            "AlarmDescription":"Alarms when changes are made to the AWS Config service.",
+            "AlarmDescription":"Alarms when changes are made to the S3 bucket policies.",
             "AlarmActions":[
                {
                   "Ref":"AlarmNotificationTopic"
