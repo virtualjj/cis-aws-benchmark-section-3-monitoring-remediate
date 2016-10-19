@@ -16,6 +16,9 @@ Here is what is working:
 	* 3.9
 	* 3.8
 	* 3.7
+	* 3.6
+	* 3.5
+	* 3.4
 
 Note that for resource **TrailBucket** the DeletionPolicy is set to **Delete** since I'm still testing. Also, when you delete the stack, make sure to empty out the S3 bucket that this template creates **FIRST** since even with a DeletionPolicy of Delete, CloudFormation will fail since the bucket is not empty.
 
@@ -23,8 +26,10 @@ Note that for resource **TrailBucket** the DeletionPolicy is set to **Delete** s
     
 Here is what I will be adding this week:
 
-* Custom KMS key for CloudTrail encrypting.
 * The rest of the metric filters and alarms.
+
+I will add Custom KMS key for CloudTrail encrypting last since it takes 7 days to remove keys. This can get messy when testing.
+
 
 ## PURPOSE
 The purpose of this project is to automate as many of the [CIS AWS Foundations Benchmark](https://d0.awsstatic.com/whitepapers/compliance/AWS_CIS_Foundations_Benchmark.pdf) controls as possible using AWS CloudFormation.  
