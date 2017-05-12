@@ -59,3 +59,44 @@ The main dependency is on SNS. Available SNS regions can be reference at the FAQ
 
 [![Launch CloudFormation Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
 )](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=cis-benchmark-3-monitoring-remediate&templateURL=https://s3-us-west-2.amazonaws.com/github.cis-aws-benchmark-section-3-monitoring-remediate/cis-aws-benchmark-section-3-monitoring-remediate.yml)
+
+3. At the **Specify Details** screen you can play around with different naming conventions but at a minimum you must set the email address that you want to receive alarms. If you launch using example@example.com the stack will complete but you'll never receive alerts because unless you have access to the mailbox of example@example.com you won't be able to verify the address. Also, use a group email instead of individuals if possible so the relevant folks can receive the notifications.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-specify-details-part1.jpg "Set alarm email address.")
+
+4. As you scroll down, again you use your own naming conventions but the defaults will let you launch the stack however the naming conventions will be automatically generated with random values.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-specify-details-part2.jpg "Consider changing CloudTrail and CloudWatch names.")
+
+5. The Metric Filter names are the main part of this template. Use the defaults or change to your own naming convention. I have set the Alarm names to be the same as the Metric Filter names for simplicity. 
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-specify-details-part3.jpg "Consider changing Metric Filter names.")
+
+6. Feel free to set Tags if you want. Otherwise click **Next**.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-options.jpg "Consider changing Metric Filter names.")
+
+7. Review your settings, check the acknowledgement box, and click **Create** to launch the stack.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-review-and-create.jpg "Acknowledge IAM role creation and create stack.")
+
+8. During creation of the stack and assuming that you changed the default example@example.com email address, you will receive a verification email. Click on the **Confirm subscription** link or copy the link and paste it in your browser of choice.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-receive-email-verification.jpg "Receive verification email.")
+
+9. You should receive a Subscription Confirmed message after clicking on the **Confirm subscription** link from the email you received.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-subscription-confirmed.jpg "Subscription confirmed message in browser.")
+
+10. Your stack should now be complete. Click on the **Outputs** dropdown to see the registered email address and the CloudTrail S3 bucket. 
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-create-complete.jpg "Confirm Outputs.")
+
+11. Go to CloudWatch, click Logs, and then click on the metric filters that have been created.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-view-filters-part1.jpg "Find CloudWatch metric filters.")
+
+12. You can now see the configured Metric Filters and Alarms. I have highlighted **Filter Name** and **Metric**. For whatever reason, you cannot actually set the **Filter Name** from CloudFormation but you can do it from the AWS CLI. So the name that is actually getting set with this template is the **Metric** field.
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-view-filters-part2.jpg "Find CloudWatch metric filters.")
+
