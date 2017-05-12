@@ -100,3 +100,11 @@ The main dependency is on SNS. Available SNS regions can be reference at the FAQ
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-view-filters-part2.jpg "Find CloudWatch metric filters.")
 
+---
+
+## TIP
+
+When you delete a stack, all Topics are automatically deleted. Subscriptions to those Topics are not. Make sure you verify your email subscriptions even if you are testing. If you don't when you delete the stack you cannot immediately delete the subscriptions that were associated with the Topic that was created - you'll have to wait three days for AWS to do it automatically for you. 
+
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-tip-pending-subscriptions.jpg "Have to wait 3 days for unverified subscriptions to be removed.")
+
