@@ -53,7 +53,7 @@ The main dependency is on SNS. Available SNS regions can be reference at the FAQ
 
 1. Login to your AWS account and select the region that you want to deploy template.
 
-![alt text](https://github.com/virtualjj/automated-openvpnas/blob/master/images/readme/cis-bench-sec-3-choose-region.jpg "Example logging into AWS console and selecting a region.")
+![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-choose-region.jpg "Example logging into AWS console and selecting a region.")
 
 2. Click the **Launch Stack** button below to go directly to the CloudFormation service in the selected region of your AWS account.
 
