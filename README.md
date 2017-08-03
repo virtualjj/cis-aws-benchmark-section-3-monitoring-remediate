@@ -58,7 +58,7 @@ The main dependency is on SNS. Available SNS regions can be reference at the FAQ
 2. Click the **Launch Stack** button below to go directly to the CloudFormation service in the selected region of your AWS account.
 
 [![Launch CloudFormation Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png
-)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=cis-benchmark-3-monitoring-remediate&templateURL=https://s3-us-west-2.amazonaws.com/github.cis-aws-benchmark-section-3-monitoring-remediate/cis-aws-benchmark-section-3-monitoring-remediate.yml)
+)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=cis-benchmark-3-monitoring-remediate&templateURL=https://s3-us-west-2.amazonaws.com/github-cis-aws-benchmark-section-3-monitoring-remediate/cis-aws-benchmark-section-3-monitoring-remediate.yml)
 
 3. At the **Specify Details** screen you can play around with different naming conventions but at a minimum you must set the email address that you want to receive alarms. If you launch using example@example.com the stack will complete but you'll never receive alerts because unless you have access to the mailbox of example@example.com you won't be able to verify the address. Also, use a group email instead of individuals if possible so the relevant folks can receive the notifications.
 
