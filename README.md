@@ -1,10 +1,16 @@
-# What is the purpose of this project?
+# REMEDIATE CIS AWS BENCHMARK SECTION 3 - MONITORING
 
+- [PURPOSE](#purpose)
+- [WHY USE THIS TEMPLATE](#why-use-this-template)
+- [STACK DEPLOYMENT](#stack-deployment)
+- [STACK DELETION](#stack-deletion)
+
+# PURPOSE
 The purpose of this project is to automate fixes for Section 3 Monitoring of the [CIS (Center for Internet Security) AWS Foundations Benchmark](https://d0.awsstatic.com/whitepapers/compliance/AWS_CIS_Foundations_Benchmark.pdf).
 
 This AWS CloudFormation template let's you register an email that will receive alarms for the following controls:
 
-- 3.1 Ensure a log metric filter and alarm exist for unauthorized API calls 
+- 3.1 Ensure a log metric filter and alarm exist for unauthorized API calls
 - 3.2 Ensure a log metric filter and alarm exist for Management Console sign-in without MFA (Scored)
 - 3.3 Ensure a log metric filter and alarm exist for usage of "root" account (Scored)
 - 3.4 Ensure a log metric filter and alarm exist for IAM policy changes (Scored)
@@ -19,7 +25,11 @@ This AWS CloudFormation template let's you register an email that will receive a
 - 3.13 Ensure a log metric filter and alarm exist for route table changes (Scored)
 - 3.14 Ensure a log metric filter and alarm exist for VPC changes (Scored)
 
-# Why would I want to use this AWS CloudFormation template?
+The following control is not included as it is not scored:
+
+- 3.15 Ensure appropriate subscribers to each SNS topic (Not Scored)
+
+# WHY USE THIS TEMPLATE
 
 In addition to quickly remediating Section 3 Monitoring of the CIS AWS Foundations Benchmark, this AWS CloudFormation template let's you customize your own names for the following:
 
@@ -33,23 +43,9 @@ In addition to quickly remediating Section 3 Monitoring of the CIS AWS Foundatio
 
 The advantage of custom naming is that you can more easily align resource names with your organization's naming conventions.
 
-This template is also non-destructive so you should be able to deploy and remove without interfering with existing resources. However, always do your own tests just in case!
+This template is also non-destructive so you should be able to deploy and remove without interfering with existing resources but do test first!
 
-# Which AWS regions does this template support?
-
-The main dependency is on SNS. Available SNS regions can be reference at the FAQ [Q: Is Amazon SNS available in all regions where AWS services are available?](https://aws.amazon.com/sns/faqs/) which currently lists:
-
-- US East (Northern Virginia)
-- US West (Oregon)
-- US West (Northern California)
-- EU (Ireland)
-- EU (Frankfurt)
-- Asia Pacific (Singapore)
-- Asia Pacific (Tokyo)
-- Asia Pacific (Sydney)
-- South America (Sao Paulo)
-
-# How do I deploy this template?
+# STACK DEPLOYMENT
 
 1. Login to your AWS account and select the region that you want to deploy template.
 
@@ -68,7 +64,7 @@ The main dependency is on SNS. Available SNS regions can be reference at the FAQ
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-specify-details-part2.jpg "Consider changing CloudTrail and CloudWatch names.")
 
-5. The Metric Filter names are the main part of this template. Use the defaults or change to your own naming convention. I have set the Alarm names to be the same as the Metric Filter names for simplicity. 
+5. The Metric Filter names are the main part of this template. Use the defaults or change to your own naming convention. I have set the Alarm names to be the same as the Metric Filter names for simplicity.
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-specify-details-part3.jpg "Consider changing Metric Filter names.")
 
@@ -88,7 +84,7 @@ The main dependency is on SNS. Available SNS regions can be reference at the FAQ
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-subscription-confirmed.jpg "Subscription confirmed message in browser.")
 
-10. Your stack should now be complete. Click on the **Outputs** dropdown to see the registered email address and the CloudTrail S3 bucket. 
+10. Your stack should now be complete. Click on the **Outputs** dropdown to see the registered email address and the CloudTrail S3 bucket.
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-create-complete.jpg "Confirm Outputs.")
 
@@ -100,11 +96,9 @@ The main dependency is on SNS. Available SNS regions can be reference at the FAQ
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-view-filters-part2.jpg "Find CloudWatch metric filters.")
 
----
 
-## TIP
+# STACK DELETION
 
-When you delete a stack, all Topics are automatically deleted. Subscriptions to those Topics are not. Make sure you verify your email subscriptions even if you are testing. If you don't when you delete the stack you cannot immediately delete the subscriptions that were associated with the Topic that was created - you'll have to wait three days for AWS to do it automatically for you. 
+When you delete a stack, all Topics are automatically deleted. Subscriptions to those Topics are not. Make sure you verify your email subscriptions even if you are testing. If you don't when you delete the stack you cannot immediately delete the subscriptions that were associated with the Topic that was created - you'll have to wait three days for AWS to do it automatically for you.
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-tip-pending-subscriptions.jpg "Have to wait 3 days for unverified subscriptions to be removed.")
-
