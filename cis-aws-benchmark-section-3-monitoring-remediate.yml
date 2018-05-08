@@ -181,7 +181,7 @@ Parameters:
     MaxLength: '64'
     # REGEX Help:
     # This allows one or more (+) alphanumeric characters (\w) with the symbols =,.@- OR an empty string: ^(|)$
-    AllowedPattern: "^(|\\w=,.@-]+)$"
+    AllowedPattern: "[|\\w=,.@-]+"
     ConstraintDescription: "The role name must contain only upper and lowercase alphanumeric characters with no spaces. These characters are alllowed: = , . @ -"
   NameYourNameSpace:
     Description: "A namespace is a container for CloudWatch metrics. Metrics in different namespaces are isolated from each other, so that metrics from different applications are not mistakenly aggregated into the same statistics. Possible characters are: alphanumeric characters (0-9A-Za-z), period (.), hyphen (-), underscore (_), forward slash (/), hash (#), and colon (:)."
