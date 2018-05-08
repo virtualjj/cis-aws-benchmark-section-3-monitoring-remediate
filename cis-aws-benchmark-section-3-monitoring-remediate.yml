@@ -915,12 +915,12 @@ Resources:
       Threshold: '1'
 
 Outputs:
-  CloudTrailS3Bucket:
+  CloudTrailS3BucketName:
     Description: CloudTrail S3 Bucket Name
-    Value: !GetAtt CloudTrailS3Bucket.Arn
+    Value: !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
   NotificationEmail:
     Description: Email for Alarms
     Value: !Ref SetEmail
   TrailLogGroupRole:
-    Description: IAM Role Name for Cloudtrail Logs
+    Description: IAM Role Name for CloudTrail Logs
     Value: !GetAtt TrailLogGroupRole.Arn
