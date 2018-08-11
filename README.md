@@ -60,7 +60,7 @@ This template is also non-destructive so you should be able to deploy and remove
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-specify-details-part1.jpg "Set alarm email address.")
 
-4. As you scroll down, again you use your own naming conventions but the defaults will let you launch the stack however the naming conventions will be automatically generated with random values.
+4. As you scroll down, again you use your own naming conventions but the defaults will let you launch the stack however the naming conventions will be automatically generated with random values. You can add up to three AWS accounts to receive logs from however, you'll need to configure those accounts manually using the instructions at [Receiving CloudTrail Log Files from Multiple Accounts](https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-receive-logs-from-multiple-accounts.html):
 
 ![alt text](https://github.com/virtualjj/cis-aws-benchmark-section-3-monitoring-remediate/blob/master/images/readme/cis-bench-sec-3-specify-details-part2.jpg "Consider changing CloudTrail and CloudWatch names.")
 
