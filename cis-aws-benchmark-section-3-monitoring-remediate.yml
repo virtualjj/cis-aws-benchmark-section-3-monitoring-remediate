@@ -16,9 +16,12 @@ Metadata:
       - SetTRAILTopicName
       - SetTRAILTopicDisplayName
     - Label:
-        default: CLOUDTRAIL
+        default: S3 & CLOUDTRAIL
       Parameters:
       - PreExistingS3BucketCloudTrail
+      - CrossAccount01
+      - CrossAccount02
+      - CrossAccount03
       - CloudTrailLogGroupName
       - NameCloudTrailRole
     - Label:
@@ -61,6 +64,12 @@ Metadata:
         default: CloudWatch Log Retention
       PreExistingS3BucketCloudTrail:
         default: CloudTrail S3 Bucket
+      CrossAccount01:
+        default: Cross-Account 01
+      CrossAccount02:
+        default: Cross-Account 02
+      CrossAccount03:
+        default: Cross-Account 03
       CloudTrailLogGroupName:
         default: (OPTIONAL) CloudTrail Log Group Name
       NameCloudTrailRole:
@@ -93,6 +102,7 @@ Metadata:
         default: Route Table Changes
       314VPCChanges:
         default: VPC Changes
+
 Parameters:
   
   SetEmail:
@@ -161,7 +171,8 @@ Parameters:
     - 3653
   
   PreExistingS3BucketCloudTrail:
-    Description: "Enter an unique name for your EXISTING CloudTrail S3 bucket that only contains lowercase letters, numbers, periods (.), and dashes (-). If you don't specify a name, a random name like \"<stack name>-cloudtrails3bucket-2wpe5iffv606\" will be automatically generated. Note that this bucket's DeletionPolicy is set to Retain. (i.e. Stack deletion will not delete the bucket.)"
+    #Description: "Enter an unique name for your EXISTING CloudTrail S3 bucket that only contains lowercase letters, numbers, periods (.), and dashes (-). If you don't specify a name, a random name like \"<stack name>-cloudtrails3bucket-2wpe5iffv606\" will be automatically generated. Note that this bucket's DeletionPolicy is set to Retain. (i.e. Stack deletion will not delete the bucket.)"
+    Description: "Enter the name of your EXISTING root S3 bucket for S3 log collection or the export name of the bucket to send logs to. Note that the templates have to be in the same region."
     Type: String
     # Typically S3 bucket names must be between 3 and 63 characters but since we want to allow an empty string, set MinLength to '0'.
     # Ref: http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html
@@ -172,6 +183,24 @@ Parameters:
     AllowedPattern: "^(|[a-z0-9.-]+)$"
     ConstraintDescription: The bucket name must contain only lowercase letters, numbers, periods (.), and dashes (-).
   
+  CrossAccount01:
+    Description: "Enter the account name from where you'd like to receive CloudTrail logs. Leave empty if none."
+    Type: String
+    AllowedPattern: "(|\\d{12})"
+    ConstraintDescription: AWS accounts are 12 digits long. Enter 12 digits or leave blank.
+
+  CrossAccount02:
+    Description: "Enter the account name from where you'd like to receive CloudTrail logs. Leave empty if none."
+    Type: String
+    AllowedPattern: "(|\\d{12})"
+    ConstraintDescription: AWS accounts are 12 digits long. Enter 12 digits or leave blank.
+
+  CrossAccount03:
+    Description: "Enter the account name from where you'd like to receive CloudTrail logs. Leave empty if none."
+    Type: String
+    AllowedPattern: "(|\\d{12})"
+    ConstraintDescription: AWS accounts are 12 digits long. Enter 12 digits or leave blank.
+
   CloudTrailLogGroupName:
     Description: Enter a name for your CloudTrail LogGroup.
     Type: String
@@ -334,6 +363,9 @@ Conditions:
   
   # Set these little monkeys to FALSE if no input from the user.
   NeedCloudTrailS3Bucket: !Equals [!Ref PreExistingS3BucketCloudTrail, ""]
+  NeedCrossAccount01: !Equals [!Ref CrossAccount01, ""]
+  NeedCrossAccount02: !Equals [!Ref CrossAccount02, ""]
+  NeedCrossAccount03: !Equals [!Ref CrossAccount03, ""]
   WantALARMTopicName: !Equals [!Ref SetALARMTopicName, ""]
   NeedTRAILTopicName: !Equals [!Ref SetTRAILTopicName, ""]
   WantCloudTrailRoleName: !Equals [!Ref NameCloudTrailRole, ""]
@@ -367,19 +399,41 @@ Resources:
             - ''
             - - 'arn:aws:s3:::'
               - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
-        - Sid: AWSCloudTrailWrite
+        - Sid: AWSCloudTrailWriteAdminS3
           Effect: Allow
           Principal:
             Service: cloudtrail.amazonaws.com
           Action: s3:PutObject
           Resource:
-            Fn::Join:
-            - ''
-            - - 'arn:aws:s3:::'
-              - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
-              - "/AWSLogs/"
-              - Ref: AWS::AccountId
-              - "/*"
+            - Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
+                - "/AWSLogs/"
+                - Ref: AWS::AccountId
+                - "/*"
+            - Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
+                - "/AWSLogs/"
+                # Not sure if this is the best way, but use default account if not CrossAccount specified.
+                - !If [NeedCrossAccount01, !Ref "AWS::AccountId", !Ref CrossAccount01]
+                - "/*"
+            - Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
+                - "/AWSLogs/"
+                - !If [NeedCrossAccount02, !Ref "AWS::AccountId", !Ref CrossAccount02]
+                - "/*"
+            - Fn::Join:
+              - ''
+              - - 'arn:aws:s3:::'
+                - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
+                - "/AWSLogs/"
+                - !If [NeedCrossAccount03, !Ref "AWS::AccountId", !Ref CrossAccount03]
+                - "/*"
           Condition:
             StringEquals:
               s3:x-amz-acl: bucket-owner-full-control
@@ -402,7 +456,6 @@ Resources:
         Version: '2012-10-17'
         Statement:
         - Sid: AssumeRole1
-
           Effect: Allow
           Principal:
             Service: cloudtrail.amazonaws.com
@@ -543,7 +596,7 @@ Resources:
       AlarmActions:
       - Ref: EmailAlarmNotificationTopic
       MetricName: !Ref 32MgmtConsoleNoMFA
-      Namespace: CIS-SECURITY
+      Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
       EvaluationPeriods: '1'
       Period: '300'
@@ -916,8 +969,10 @@ Resources:
 
 Outputs:
   CloudTrailS3BucketName:
-    Description: CloudTrail S3 Bucket Name
+    Description: CloudTrail S3 Target Bucket Name
     Value: !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
+    Export:
+      Name: !Sub "${AWS::StackName}-BucketName"
   NotificationEmail:
     Description: Email for Alarms
     Value: !Ref SetEmail
