@@ -1,5 +1,4 @@
----
-AWSTemplateFormatVersion: '2010-09-09'
+AWSTemplateFormatVersion: "2010-09-09"
 Description: Automate Section 3 - Monitoring of the CIS AWS Foundations Benchmark controls and send alarms to an email address.
 Metadata:
   AWS::CloudFormation::Interface:
@@ -108,7 +107,7 @@ Parameters:
   SetEmail:
     Type: String
     Default: "example@example.com"
-    Description: Triggered alarms will alert to this email address. Verification required and you can opt-out later. Make sure to validate otherwise you won't be able to delete the subscription and have to wait 3 days for automatic deletion.
+    Description: Triggered alarms will alert to this email address. Verification required and you can opt-out later. Make sure to validate otherwise you won"t be able to delete the subscription and have to wait 3 days for automatic deletion.
     # REGEX Help:
     # We could get fancy with some serious REGEX action here but keep it simple.
     # This allows one or more characters (.+) in front and behind the @ symbol.
@@ -119,32 +118,32 @@ Parameters:
     Type: String
     Default: CIS-BENCHMARK-ALARMS
     Description: "Set a unique name for your CloudWatch Alarm SNS Topic. If you don't specify a name, a random name like <stack name>-AlarmNotificationTopic-9VWR9AVOB5QS will be automatically generated."
-    MinLength: '0'
-    MaxLength: '256'
+    MinLength: "0"
+    MaxLength: "256"
     AllowedPattern: "[\\w_-]*"
   
   SetALARMTopicDisplayName:
     Type: String
     Default: cis-alarm
     Description: "REQUIRED for SMS. Can only use up to 10 characters from the AWS console."
-    MinLength: '0'
-    MaxLength: '10'
+    MinLength: "0"
+    MaxLength: "10"
     AllowedPattern: "[\\w_-]*"
   
   SetTRAILTopicName:
     Type: String
     Default: CIS-BENCHMARK-CLOUDTRAIL
     Description: "Set a unique name for your CloudTrail SNS Topic. If you don't specify a name, a random name like <stack name>-TrailTopic-9VWR9AVOB5QS will be automatically generated."
-    MinLength: '0'
-    MaxLength: '256'
+    MinLength: "0"
+    MaxLength: "256"
     AllowedPattern: "[\\w_-]*"
   
   SetTRAILTopicDisplayName:
     Type: String
     Default: cis-cldtrl
     Description: "REQUIRED for SMS. Can only use up to 10 characters from the AWS console."
-    MinLength: '0'
-    MaxLength: '10'
+    MinLength: "0"
+    MaxLength: "10"
     AllowedPattern: "[\\w_-]*"
   
   CloudWatchLogsRetention:
@@ -171,15 +170,15 @@ Parameters:
     - 3653
   
   PreExistingS3BucketCloudTrail:
-    #Description: "Enter an unique name for your EXISTING CloudTrail S3 bucket that only contains lowercase letters, numbers, periods (.), and dashes (-). If you don't specify a name, a random name like \"<stack name>-cloudtrails3bucket-2wpe5iffv606\" will be automatically generated. Note that this bucket's DeletionPolicy is set to Retain. (i.e. Stack deletion will not delete the bucket.)"
+    #Description: "Enter an unique name for your EXISTING CloudTrail S3 bucket that only contains lowercase letters, numbers, periods (.), and dashes (-). If you don"t specify a name, a random name like \"<stack name>-cloudtrails3bucket-2wpe5iffv606\" will be automatically generated. Note that this bucket"s DeletionPolicy is set to Retain. (i.e. Stack deletion will not delete the bucket.)"
     Description: "Enter the name of your EXISTING root S3 bucket for S3 log collection or the export name of the bucket to send logs to. Note that the templates have to be in the same region."
     Type: String
-    # Typically S3 bucket names must be between 3 and 63 characters but since we want to allow an empty string, set MinLength to '0'.
+    # Typically S3 bucket names must be between 3 and 63 characters but since we want to allow an empty string, set MinLength to "0".
     # Ref: http://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html
-    MinLength: '0'
-    MaxLength: '63'
+    MinLength: "0"
+    MaxLength: "63"
     # REGEX Help:
-    # This allows one or more (+) lower case alphanumeric characters (a-z0-9), no spaces, and the characters '.' (period) and '-' (hyphen) OR an empty string: ^(|)$
+    # This allows one or more (+) lower case alphanumeric characters (a-z0-9), no spaces, and the characters "." (period) and "-" (hyphen) OR an empty string: ^(|)$
     AllowedPattern: "^(|[a-z0-9.-]+)$"
     ConstraintDescription: The bucket name must contain only lowercase letters, numbers, periods (.), and dashes (-).
   
@@ -205,18 +204,18 @@ Parameters:
     Description: Enter a name for your CloudTrail LogGroup.
     Type: String
     Default: CloudTrail/DefaultLogGroup
-    MinLength: '0'
-    MaxLength: '512'
+    MinLength: "0"
+    MaxLength: "512"
     AllowedPattern: "[\\w-/.]+"
     ConstraintDescription: Log group names can be between 1 and 512 characters long.
-      Allowed characters include a-z, A-Z, 0-9, '_' (underscore), '-' (hyphen), '/'
-      (forward slash), and '.' (period).
+      Allowed characters include a-z, A-Z, 0-9, "_" (underscore), "-" (hyphen), "/"
+      (forward slash), and "." (period).
   
   NameCloudTrailRole:
     Description: "A unique name for a CloudTrail Role to be created that contains alphanumeric characters, no spaces, and the characters: = , . @ -. If you don't specify a name, a random name like \"<stack name>-TrailLogGroupRole-1OFN28AF4AUPV\" will be automatically generated."
     Type: String
-    MinLength: '0'
-    MaxLength: '64'
+    MinLength: "0"
+    MaxLength: "64"
     # REGEX Help:
     # This allows one or more (+) alphanumeric characters (\w) with the symbols =,.@- OR an empty string: ^(|)$
     AllowedPattern: "^(|[|\\w=,.@-]+)$"
@@ -225,15 +224,15 @@ Parameters:
   NameYourNameSpace:
     Description: "A namespace is a container for CloudWatch metrics. Metrics in different namespaces are isolated from each other, so that metrics from different applications are not mistakenly aggregated into the same statistics. Possible characters are: alphanumeric characters (0-9A-Za-z), period (.), hyphen (-), underscore (_), forward slash (/), hash (#), and colon (:)."
     Type: String
-    MaxLength: '256'
+    MaxLength: "256"
     Default: CIS-3-MONITORING
   
   31UnauthAPICalls:
     Description: 3.01 Ensure a log metric filter and alarm exist for unauthorized API calls 
     Type: String
     Default: CIS Benchmark v.1.1 - 3.01 Unauthorized API Calls
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     # REGEX Help:
     # This allows one or more (+) alphanumeric characters (\w) with the symbols -_/.
     # Must escape "\" and symbols with "\"
@@ -244,18 +243,18 @@ Parameters:
     Description: 3.02 Ensure a log metric filter and alarm exist for Management Console sign-in without MFA (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.02 Management Console Sign-in Without MFA
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
   33UseOfRootAcct:
     Description: 3.03 Ensure a log metric filter and alarm exist for usage of "root" account (Scored)
     Type: String
-    # Be careful - can't use quotes in Metric Filter name so "root" becomes root.
+    # Be careful - can"t use quotes in Metric Filter name so "root" becomes root.
     Default: CIS Benchmark v.1.1 - 3.03 Usage of root Account
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -263,8 +262,8 @@ Parameters:
     Description: 3.04 Ensure a log metric filter and alarm exist for IAM policy changes (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.04 IAM Policy Changes
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -272,8 +271,8 @@ Parameters:
     Description: 3.05 Ensure a log metric filter and alarm exist for CloudTrail configuration changes (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.05 CloudTrail Config Changes
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -281,8 +280,8 @@ Parameters:
     Description: 3.06 Ensure a log metric filter and alarm exist for AWS Management Console authentication failures (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.06 AWS Management Console Authentication Failures
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -290,8 +289,8 @@ Parameters:
     Description: 3.07 Ensure a log metric filter and alarm exist for disabling or scheduled deletion of customer created CMKs (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.07 Disabling or Scheduled Deletion of Customer Created CMKs
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -299,8 +298,8 @@ Parameters:
     Description: 3.08 Ensure a log metric filter and alarm exist for S3 bucket policy changes (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.08 S3 Bucket Policy Changes
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -308,8 +307,8 @@ Parameters:
     Description: 3.09 Ensure a log metric filter and alarm exist for AWS Config configuration changes (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.09 AWS Config Configuration Changes
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -317,8 +316,8 @@ Parameters:
     Description: 3.10 Ensure a log metric filter and alarm exist for AWS Config configuration changes (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.10 Security Group Changes
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -327,8 +326,8 @@ Parameters:
     Type: String
     # Be careful - "()" not allowed so (NACL) becomes NACL.
     Default: CIS Benchmark v.1.1 - 3.11 Changes to Network Access Control Lists NACL
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -336,8 +335,8 @@ Parameters:
     Description: 3.12 Ensure a log metric filter and alarm exist for changes to network gateways (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.12 Changes to Network Gateways
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -345,8 +344,8 @@ Parameters:
     Description: 3.13 Ensure a log metric filter and alarm exist for route table changes (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.13 Route Table Changes
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
   
@@ -354,8 +353,8 @@ Parameters:
     Description: 3.14 Ensure a log metric filter and alarm exist for VPC changes (Scored)
     Type: String
     Default: CIS Benchmark v.1.1 - 3.14 VPC Changes
-    MinLength: '1'
-    MaxLength: '255'
+    MinLength: "1"
+    MaxLength: "255"
     AllowedPattern: "[\\w\\s-_/.]+"
     ConstraintDescription: "Metric names can contain up to 255 alphanumeric characters, with the following also allowed: -_./"
 
@@ -375,6 +374,7 @@ Resources:
   CloudTrailS3Bucket:
     Condition: NeedCloudTrailS3Bucket
     DeletionPolicy: Retain
+    UpdateReplacePolicy: Retain
     Type: AWS::S3::Bucket
     Properties:
       # BucketName not required but auto-generated one looks sloppy. 
@@ -387,7 +387,7 @@ Resources:
     Properties:
       Bucket: !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
       PolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
         - Sid: AWSCloudTrailAclCheck
           Effect: Allow
@@ -396,8 +396,8 @@ Resources:
           Action: s3:GetBucketAcl
           Resource:
             Fn::Join:
-            - ''
-            - - 'arn:aws:s3:::'
+            - ""
+            - - "arn:aws:s3:::"
               - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
         - Sid: AWSCloudTrailWriteAdminS3
           Effect: Allow
@@ -406,30 +406,30 @@ Resources:
           Action: s3:PutObject
           Resource:
             - Fn::Join:
-              - ''
-              - - 'arn:aws:s3:::'
+              - ""
+              - - "arn:aws:s3:::"
                 - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
                 - "/AWSLogs/"
                 - Ref: AWS::AccountId
                 - "/*"
             - Fn::Join:
-              - ''
-              - - 'arn:aws:s3:::'
+              - ""
+              - - "arn:aws:s3:::"
                 - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
                 - "/AWSLogs/"
                 # Not sure if this is the best way, but use default account if not CrossAccount specified.
                 - !If [NeedCrossAccount01, !Ref "AWS::AccountId", !Ref CrossAccount01]
                 - "/*"
             - Fn::Join:
-              - ''
-              - - 'arn:aws:s3:::'
+              - ""
+              - - "arn:aws:s3:::"
                 - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
                 - "/AWSLogs/"
                 - !If [NeedCrossAccount02, !Ref "AWS::AccountId", !Ref CrossAccount02]
                 - "/*"
             - Fn::Join:
-              - ''
-              - - 'arn:aws:s3:::'
+              - ""
+              - - "arn:aws:s3:::"
                 - !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
                 - "/AWSLogs/"
                 - !If [NeedCrossAccount03, !Ref "AWS::AccountId", !Ref CrossAccount03]
@@ -450,10 +450,10 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       # RoleName not required but looks sloppy if not set.
-      # If the user didn't input a name (i.e. FALSE condition), "AWS::NoValue" removes the RoleName property and a random name for the IAM role will be created.
+      # If the user didn"t input a name (i.e. FALSE condition), "AWS::NoValue" removes the RoleName property and a random name for the IAM role will be created.
       RoleName: !If [WantCloudTrailRoleName, !Ref "AWS::NoValue", !Ref NameCloudTrailRole]
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: "2012-10-17"
         Statement:
         - Sid: AssumeRole1
           Effect: Allow
@@ -463,7 +463,7 @@ Resources:
       Policies:
       - PolicyName: cloudtrail-policy
         PolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
           - Sid: AWSCloudTrailCreateLogStream2014110
             Effect: Allow
@@ -490,12 +490,10 @@ Resources:
       TopicName: !If [NeedTRAILTopicName, !Ref "AWS::NoValue", !Ref SetTRAILTopicName]
   
   TrailTopicPolicy:
-    DependsOn:
-    - TrailTopic
     Type: AWS::SNS::TopicPolicy
     Properties:
       PolicyDocument:
-        Version: '2008-10-17'
+        Version: "2012-10-17"
         Statement:
         - Sid: AWSCloudTrailSNSPolicy
           Effect: Allow
@@ -516,7 +514,7 @@ Resources:
       IncludeGlobalServiceEvents: true
       IsLogging: true
       IsMultiRegionTrail: true
-      # If the user didn't input a name (i.e. FALSE condition), use the auto-generated bucket name created in resource name CloudTrailS3Bucket. Cannot use "AWS::NoValue" because property S3BucketName is required. Ref: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudtrail-trail.html#cfn-cloudtrail-trail-s3bucketname
+      # If the user didn"t input a name (i.e. FALSE condition), use the auto-generated bucket name created in resource name CloudTrailS3Bucket. Cannot use "AWS::NoValue" because property S3BucketName is required. Ref: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-cloudtrail-trail.html#cfn-cloudtrail-trail-s3bucketname
       S3BucketName: !If [NeedCloudTrailS3Bucket, !Ref CloudTrailS3Bucket, !Ref PreExistingS3BucketCloudTrail]
       CloudWatchLogsLogGroupArn:
         Fn::GetAtt:
@@ -558,7 +556,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 31UnauthAPICalls
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   31UnAuthAPICallsAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -570,10 +568,10 @@ Resources:
       MetricName: !Ref 31UnauthAPICalls
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   32MgmtConsoleNoMFAMetricFilter:
     DependsOn:
@@ -586,7 +584,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 32MgmtConsoleNoMFA
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   32MgmtConsoleNoMFAAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -598,10 +596,10 @@ Resources:
       MetricName: !Ref 32MgmtConsoleNoMFA
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   33UseOfRootAcctMetricFilter:
     DependsOn:
@@ -614,7 +612,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 33UseOfRootAcct
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   33UseOfRootAcctAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -626,10 +624,10 @@ Resources:
       MetricName: !Ref 33UseOfRootAcct
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   34IAMPolicyChangesMetricFilter:
     DependsOn:
@@ -645,7 +643,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 34IAMPolicyChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   34IAMPolicyChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -657,10 +655,10 @@ Resources:
       MetricName: !Ref 34IAMPolicyChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   35CloudTrailConfigChangesMetricFilter:
     DependsOn:
@@ -675,7 +673,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 35CloudTrailConfigChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   35CloudTrailConfigChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -687,10 +685,10 @@ Resources:
       MetricName: !Ref 35CloudTrailConfigChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   36ConsoleAuthFailuresMetricFilter:
     DependsOn:
@@ -699,12 +697,11 @@ Resources:
     Properties:
       LogGroupName:
         Ref: CloudTrailLogGroupName
-      FilterPattern: '{ ($.eventName = ConsoleLogin) && ($.errorMessage = "Failedauthentication")
-        }'
+      FilterPattern: "{ ($.eventName = ConsoleLogin) && ($.errorMessage = \"Failedauthentication\")}"
       MetricTransformations:
       - MetricName: !Ref 36ConsoleAuthFailures
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   36ConsoleAuthFailuresAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -716,10 +713,10 @@ Resources:
       MetricName: !Ref 36ConsoleAuthFailures
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '10'
+      Threshold: "10"
   
   37DisableDeleteCMKMetricFilter:
     DependsOn:
@@ -733,7 +730,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 37DisableDeleteCMK
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   37DisableDeleteCMKAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -745,10 +742,10 @@ Resources:
       MetricName: !Ref 37DisableDeleteCMK
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   38S3BucketPolicyChangesMetricFilter:
     DependsOn:
@@ -765,7 +762,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 38S3BucketPolicyChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   38S3BucketPolicyChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -777,10 +774,10 @@ Resources:
       MetricName: !Ref 38S3BucketPolicyChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   39AWSConfigChangesMetricFilter:
     DependsOn:
@@ -793,7 +790,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 39AWSConfigChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   39AWSConfigChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -805,10 +802,10 @@ Resources:
       MetricName: !Ref 39AWSConfigChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   310SecGroupChangesMetricFilter:
     DependsOn:
@@ -824,7 +821,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 310SecGroupChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   310SecGroupChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -836,10 +833,10 @@ Resources:
       MetricName: !Ref 310SecGroupChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   311NACLChangesMetricFilter:
     DependsOn:
@@ -855,7 +852,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 311NACLChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   311NACLChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -867,10 +864,10 @@ Resources:
       MetricName: !Ref 311NACLChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   312NetworkGatewayChangesMetricFilter:
     DependsOn:
@@ -886,7 +883,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 312NetworkGatewayChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   312NetworkGatewayChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -898,10 +895,10 @@ Resources:
       MetricName: !Ref 312NetworkGatewayChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   313RouteTableChangesMetricFilter:
     DependsOn:
@@ -917,7 +914,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 313RouteTableChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   313RouteTableChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -929,10 +926,10 @@ Resources:
       MetricName: !Ref 313RouteTableChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
   
   314VPCChangesMetricFilter:
     DependsOn:
@@ -950,7 +947,7 @@ Resources:
       MetricTransformations:
       - MetricName: !Ref 314VPCChanges
         MetricNamespace: !Ref NameYourNameSpace
-        MetricValue: '1'
+        MetricValue: "1"
   
   314VPCChangesChangesAlarm:
     Type: AWS::CloudWatch::Alarm
@@ -962,10 +959,10 @@ Resources:
       MetricName: !Ref 314VPCChanges
       Namespace: !Ref NameYourNameSpace
       ComparisonOperator: GreaterThanOrEqualToThreshold
-      EvaluationPeriods: '1'
-      Period: '300'
+      EvaluationPeriods: "1"
+      Period: "300"
       Statistic: Sum
-      Threshold: '1'
+      Threshold: "1"
 
 Outputs:
   CloudTrailS3BucketName:
